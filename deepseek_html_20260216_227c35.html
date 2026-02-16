@@ -1,0 +1,1190 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=yes">
+    <title>DANN CHAT - Perfect Edition</title>
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Inter', sans-serif;
+        }
+
+        body {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+        }
+
+        /* ===== CONTAINER ===== */
+        .app-container {
+            width: 100%;
+            max-width: 1400px;
+            height: 90vh;
+            background: white;
+            border-radius: 30px;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+            overflow: hidden;
+            display: flex;
+        }
+
+        /* ===== SIDEBAR ===== */
+        .sidebar {
+            width: 380px;
+            background: #f8faff;
+            border-right: 2px solid #eef2f6;
+            display: flex;
+            flex-direction: column;
+        }
+
+        /* User Info - Terpisah dari Auth */
+        .user-info {
+            padding: 25px;
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .user-detail {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .user-avatar {
+            width: 50px;
+            height: 50px;
+            background: rgba(255,255,255,0.2);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 700;
+            font-size: 20px;
+            border: 2px solid white;
+        }
+
+        .user-name {
+            font-weight: 600;
+            font-size: 16px;
+        }
+
+        .logout-btn {
+            padding: 8px 16px;
+            background: rgba(255,255,255,0.2);
+            border: 1px solid rgba(255,255,255,0.3);
+            border-radius: 20px;
+            color: white;
+            cursor: pointer;
+            transition: 0.3s;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .logout-btn:hover {
+            background: rgba(255,255,255,0.3);
+        }
+
+        /* Login Section - Terpisah */
+        .login-section {
+            padding: 30px 25px;
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            color: white;
+        }
+
+        .login-title {
+            font-size: 28px;
+            font-weight: 700;
+            margin-bottom: 20px;
+        }
+
+        .login-input {
+            width: 100%;
+            padding: 15px;
+            margin-bottom: 15px;
+            background: rgba(255,255,255,0.2);
+            border: 2px solid rgba(255,255,255,0.3);
+            border-radius: 15px;
+            color: white;
+            font-size: 15px;
+        }
+
+        .login-input::placeholder {
+            color: rgba(255,255,255,0.7);
+        }
+
+        .login-input:focus {
+            outline: none;
+            border-color: white;
+            background: rgba(255,255,255,0.3);
+        }
+
+        .login-btn {
+            width: 100%;
+            padding: 15px;
+            background: white;
+            border: none;
+            border-radius: 15px;
+            color: #667eea;
+            font-weight: 700;
+            font-size: 16px;
+            cursor: pointer;
+            transition: 0.3s;
+            margin-top: 10px;
+        }
+
+        .login-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 20px rgba(0,0,0,0.2);
+        }
+
+        .login-message {
+            color: #ffd700;
+            font-size: 13px;
+            margin-top: 10px;
+            text-align: center;
+        }
+
+        .register-link {
+            text-align: center;
+            margin-top: 20px;
+            color: rgba(255,255,255,0.8);
+        }
+
+        .register-link span {
+            color: white;
+            font-weight: 600;
+            cursor: pointer;
+            text-decoration: underline;
+        }
+
+        /* Register Section - Terpisah */
+        .register-section {
+            padding: 30px 25px;
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            color: white;
+        }
+
+        .register-title {
+            font-size: 28px;
+            font-weight: 700;
+            margin-bottom: 20px;
+        }
+
+        .register-input {
+            width: 100%;
+            padding: 15px;
+            margin-bottom: 15px;
+            background: rgba(255,255,255,0.2);
+            border: 2px solid rgba(255,255,255,0.3);
+            border-radius: 15px;
+            color: white;
+            font-size: 15px;
+        }
+
+        .register-input::placeholder {
+            color: rgba(255,255,255,0.7);
+        }
+
+        .register-input:focus {
+            outline: none;
+            border-color: white;
+            background: rgba(255,255,255,0.3);
+        }
+
+        .register-btn {
+            width: 100%;
+            padding: 15px;
+            background: white;
+            border: none;
+            border-radius: 15px;
+            color: #667eea;
+            font-weight: 700;
+            font-size: 16px;
+            cursor: pointer;
+            transition: 0.3s;
+            margin-top: 10px;
+        }
+
+        .register-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 20px rgba(0,0,0,0.2);
+        }
+
+        .register-message {
+            color: #ffd700;
+            font-size: 13px;
+            margin-top: 10px;
+            text-align: center;
+        }
+
+        .login-link {
+            text-align: center;
+            margin-top: 20px;
+            color: rgba(255,255,255,0.8);
+        }
+
+        .login-link span {
+            color: white;
+            font-weight: 600;
+            cursor: pointer;
+            text-decoration: underline;
+        }
+
+        /* Search */
+        .search-section {
+            padding: 20px 25px;
+            border-bottom: 2px solid #eef2f6;
+        }
+
+        .search-input {
+            width: 100%;
+            padding: 15px 20px;
+            border: 2px solid #eef2f6;
+            border-radius: 30px;
+            font-size: 14px;
+        }
+
+        .search-input:focus {
+            outline: none;
+            border-color: #667eea;
+        }
+
+        /* Users List */
+        .users-list {
+            flex: 1;
+            overflow-y: auto;
+            padding: 20px 25px;
+        }
+
+        .users-header {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 20px;
+            color: #6c757d;
+            font-weight: 600;
+        }
+
+        .online-count {
+            background: #e8f5e9;
+            color: #2e7d32;
+            padding: 4px 12px;
+            border-radius: 20px;
+            font-size: 12px;
+        }
+
+        .user-item {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            padding: 15px;
+            background: white;
+            border-radius: 15px;
+            margin-bottom: 10px;
+            cursor: pointer;
+            transition: 0.3s;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+            border: 2px solid transparent;
+        }
+
+        .user-item:hover {
+            transform: translateX(5px);
+            border-color: #667eea;
+            box-shadow: 0 5px 20px rgba(102,126,234,0.1);
+        }
+
+        .user-item.selected {
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            color: white;
+        }
+
+        .user-avatar-large {
+            width: 50px;
+            height: 50px;
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 700;
+            font-size: 18px;
+            color: white;
+        }
+
+        .user-item.selected .user-avatar-large {
+            background: white;
+            color: #667eea;
+        }
+
+        .user-info-chat {
+            flex: 1;
+        }
+
+        .user-name-chat {
+            font-weight: 700;
+            margin-bottom: 5px;
+        }
+
+        .user-status {
+            font-size: 12px;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+
+        .status-dot {
+            width: 8px;
+            height: 8px;
+            background: #28a745;
+            border-radius: 50%;
+        }
+
+        .status-dot.offline {
+            background: #6c757d;
+        }
+
+        .last-message {
+            font-size: 11px;
+            color: #888;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            max-width: 150px;
+        }
+
+        .user-item.selected .last-message {
+            color: rgba(255,255,255,0.7);
+        }
+
+        .unread-badge {
+            background: #ff4757;
+            color: white;
+            border-radius: 50%;
+            width: 20px;
+            height: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 11px;
+            font-weight: 700;
+        }
+
+        /* ===== CHAT AREA ===== */
+        .chat-area {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            background: white;
+        }
+
+        .chat-header {
+            padding: 20px 30px;
+            background: white;
+            border-bottom: 2px solid #eef2f6;
+            display: flex;
+            align-items: center;
+            gap: 20px;
+        }
+
+        .chat-avatar {
+            width: 60px;
+            height: 60px;
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 700;
+            font-size: 24px;
+            color: white;
+        }
+
+        .chat-info {
+            flex: 1;
+        }
+
+        .chat-name {
+            font-size: 20px;
+            font-weight: 700;
+            margin-bottom: 5px;
+        }
+
+        .chat-status {
+            font-size: 14px;
+            color: #6c757d;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+
+        .chat-actions {
+            display: flex;
+            gap: 10px;
+        }
+
+        .chat-action-btn {
+            width: 40px;
+            height: 40px;
+            background: #f8f9fa;
+            border: 1px solid #eef2f6;
+            border-radius: 50%;
+            color: #6c757d;
+            cursor: pointer;
+            transition: 0.3s;
+        }
+
+        .chat-action-btn:hover {
+            background: #667eea;
+            color: white;
+        }
+
+        /* Messages */
+        .messages-container {
+            flex: 1;
+            padding: 30px;
+            overflow-y: auto;
+            background: #f8faff;
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+
+        .message {
+            display: flex;
+            gap: 15px;
+            max-width: 70%;
+        }
+
+        .message.sent {
+            align-self: flex-end;
+            flex-direction: row-reverse;
+        }
+
+        .message-avatar {
+            width: 40px;
+            height: 40px;
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 700;
+            color: white;
+            flex-shrink: 0;
+        }
+
+        .message-content {
+            background: white;
+            padding: 15px 20px;
+            border-radius: 20px;
+            border-bottom-left-radius: 5px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+        }
+
+        .message.sent .message-content {
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            color: white;
+            border-bottom-right-radius: 5px;
+            border-bottom-left-radius: 20px;
+        }
+
+        .message-header {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 8px;
+            font-size: 12px;
+            color: #888;
+        }
+
+        .message.sent .message-header {
+            color: rgba(255,255,255,0.8);
+        }
+
+        .message-name {
+            font-weight: 700;
+        }
+
+        .message-text {
+            font-size: 14px;
+            line-height: 1.6;
+        }
+
+        /* Input */
+        .chat-input-container {
+            padding: 20px 30px;
+            background: white;
+            border-top: 2px solid #eef2f6;
+            display: flex;
+            gap: 15px;
+            align-items: center;
+        }
+
+        .input-wrapper {
+            flex: 1;
+            position: relative;
+        }
+
+        .chat-input {
+            width: 100%;
+            padding: 15px 25px;
+            border: 2px solid #eef2f6;
+            border-radius: 40px;
+            font-size: 15px;
+            background: #f8f9fa;
+        }
+
+        .chat-input:focus {
+            outline: none;
+            border-color: #667eea;
+            background: white;
+        }
+
+        .emoji-btn {
+            position: absolute;
+            right: 15px;
+            top: 50%;
+            transform: translateY(-50%);
+            background: none;
+            border: none;
+            color: #888;
+            cursor: pointer;
+            font-size: 20px;
+        }
+
+        .send-btn {
+            width: 55px;
+            height: 55px;
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            border: none;
+            border-radius: 50%;
+            color: white;
+            cursor: pointer;
+            transition: 0.3s;
+        }
+
+        .send-btn:hover {
+            transform: scale(1.1);
+        }
+
+        /* Emoji Picker */
+        .emoji-picker {
+            position: absolute;
+            bottom: 100px;
+            right: 30px;
+            background: white;
+            border-radius: 20px;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.2);
+            display: none;
+            z-index: 1000;
+            padding: 15px;
+        }
+
+        .emoji-picker.show {
+            display: block;
+        }
+
+        .emoji-grid {
+            display: grid;
+            grid-template-columns: repeat(6, 1fr);
+            gap: 10px;
+        }
+
+        .emoji-item {
+            font-size: 24px;
+            padding: 5px;
+            text-align: center;
+            cursor: pointer;
+            border-radius: 10px;
+            transition: 0.2s;
+        }
+
+        .emoji-item:hover {
+            background: #f0f0f0;
+            transform: scale(1.2);
+        }
+
+        /* Welcome */
+        .welcome-state {
+            flex: 1;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-direction: column;
+            gap: 20px;
+            color: #888;
+        }
+
+        .welcome-icon {
+            font-size: 100px;
+            color: #667eea;
+            opacity: 0.2;
+        }
+
+        .welcome-text {
+            font-size: 24px;
+            font-weight: 700;
+        }
+
+        /* Toast */
+        .toast {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            background: white;
+            padding: 15px 25px;
+            border-radius: 10px;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.2);
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            transform: translateX(400px);
+            transition: 0.3s;
+            z-index: 10000;
+            border-left: 4px solid #28a745;
+        }
+
+        .toast.show {
+            transform: translateX(0);
+        }
+
+        .toast.error {
+            border-left-color: #dc3545;
+        }
+
+        /* Hidden */
+        .hidden {
+            display: none !important;
+        }
+    </style>
+</head>
+<body>
+    <!-- Toast -->
+    <div class="toast" id="toast">
+        <i class="fas fa-check-circle"></i>
+        <span id="toastMessage">Berhasil</span>
+    </div>
+
+    <!-- Emoji Picker -->
+    <div class="emoji-picker" id="emojiPicker">
+        <div class="emoji-grid">
+            <div class="emoji-item" onclick="addEmoji('😊')">😊</div>
+            <div class="emoji-item" onclick="addEmoji('😂')">😂</div>
+            <div class="emoji-item" onclick="addEmoji('❤️')">❤️</div>
+            <div class="emoji-item" onclick="addEmoji('👍')">👍</div>
+            <div class="emoji-item" onclick="addEmoji('🔥')">🔥</div>
+            <div class="emoji-item" onclick="addEmoji('😎')">😎</div>
+            <div class="emoji-item" onclick="addEmoji('🎉')">🎉</div>
+            <div class="emoji-item" onclick="addEmoji('😢')">😢</div>
+            <div class="emoji-item" onclick="addEmoji('😡')">😡</div>
+            <div class="emoji-item" onclick="addEmoji('🥺')">🥺</div>
+            <div class="emoji-item" onclick="addEmoji('🤡')">🤡</div>
+            <div class="emoji-item" onclick="addEmoji('💀')">💀</div>
+        </div>
+    </div>
+
+    <!-- Main App -->
+    <div class="app-container">
+        <!-- Sidebar -->
+        <div class="sidebar">
+            <!-- User Info (hanya tampil jika login) -->
+            <div id="userInfo" class="user-info hidden">
+                <div class="user-detail">
+                    <div class="user-avatar" id="currentUserAvatar">D</div>
+                    <span class="user-name" id="currentUserName">Username</span>
+                </div>
+                <button class="logout-btn" onclick="logout()">
+                    <i class="fas fa-sign-out-alt"></i> Logout
+                </button>
+            </div>
+
+            <!-- Login Section (terpisah) -->
+            <div id="loginSection" class="login-section">
+                <div class="login-title">Login</div>
+                <input type="text" id="loginUsername" class="login-input" placeholder="Username">
+                <input type="password" id="loginPassword" class="login-input" placeholder="Password">
+                <button class="login-btn" onclick="login()">
+                    <i class="fas fa-sign-in-alt"></i> Login
+                </button>
+                <div class="login-message" id="loginMessage"></div>
+                <div class="register-link">
+                    Belum punya akun? <span onclick="showRegister()">Register</span>
+                </div>
+            </div>
+
+            <!-- Register Section (terpisah) -->
+            <div id="registerSection" class="register-section hidden">
+                <div class="register-title">Register</div>
+                <input type="text" id="regUsername" class="register-input" placeholder="Username">
+                <input type="password" id="regPassword" class="register-input" placeholder="Password">
+                <input type="password" id="regConfirm" class="register-input" placeholder="Konfirmasi Password">
+                <input type="text" id="regName" class="register-input" placeholder="Nama (opsional)">
+                <button class="register-btn" onclick="register()">
+                    <i class="fas fa-user-plus"></i> Register
+                </button>
+                <div class="register-message" id="registerMessage"></div>
+                <div class="login-link">
+                    Sudah punya akun? <span onclick="showLogin()">Login</span>
+                </div>
+            </div>
+
+            <!-- Search (hanya tampil jika login) -->
+            <div id="searchSection" class="search-section hidden">
+                <input type="text" id="searchUser" class="search-input" placeholder="Cari user..." onkeyup="searchUsers()">
+            </div>
+
+            <!-- Users List (hanya tampil jika login) -->
+            <div id="usersListContainer" class="users-list hidden">
+                <div class="users-header">
+                    <span><i class="fas fa-users"></i> ONLINE USERS</span>
+                    <span class="online-count" id="onlineCount">0 online</span>
+                </div>
+                <div id="usersList"></div>
+            </div>
+        </div>
+
+        <!-- Chat Area -->
+        <div class="chat-area">
+            <!-- Chat Header -->
+            <div id="chatHeader" class="chat-header hidden">
+                <div class="chat-avatar" id="chatAvatar">U</div>
+                <div class="chat-info">
+                    <div class="chat-name" id="chatName">Username</div>
+                    <div class="chat-status" id="chatStatus">
+                        <span class="status-dot" id="chatStatusDot"></span>
+                        <span id="chatStatusText">Online</span>
+                    </div>
+                </div>
+                <div class="chat-actions">
+                    <button class="chat-action-btn"><i class="fas fa-phone"></i></button>
+                    <button class="chat-action-btn"><i class="fas fa-video"></i></button>
+                    <button class="chat-action-btn"><i class="fas fa-info-circle"></i></button>
+                </div>
+            </div>
+
+            <!-- Messages -->
+            <div class="messages-container" id="messagesContainer">
+                <div id="welcomeState" class="welcome-state">
+                    <div class="welcome-icon">
+                        <i class="fas fa-comments"></i>
+                    </div>
+                    <div class="welcome-text">Pilih user untuk mulai chat</div>
+                    <div class="welcome-sub">Atau cari user melalui kolom pencarian</div>
+                </div>
+                <div id="messagesList"></div>
+            </div>
+
+            <!-- Input -->
+            <div id="chatInput" class="chat-input-container hidden">
+                <div class="input-wrapper">
+                    <input type="text" id="messageInput" class="chat-input" placeholder="Tulis pesan..." onkeypress="if(event.key==='Enter') sendMessage()">
+                    <button class="emoji-btn" onclick="toggleEmojiPicker()">
+                        <i class="fas fa-smile"></i>
+                    </button>
+                </div>
+                <button class="send-btn" onclick="sendMessage()">
+                    <i class="fas fa-paper-plane"></i>
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // ===== DATA =====
+        let users = JSON.parse(localStorage.getItem('users')) || [];
+        let messages = JSON.parse(localStorage.getItem('messages')) || [];
+        let currentUser = JSON.parse(localStorage.getItem('currentUser')) || null;
+        let selectedUserId = null;
+
+        // Dummy users
+        if (users.length === 0) {
+            users = [
+                { id: '1', username: 'admin', password: 'admin123', name: 'Admin', avatar: 'A', online: true },
+                { id: '2', username: 'budi', password: 'budi123', name: 'Budi Santoso', avatar: 'B', online: true },
+                { id: '3', username: 'siti', password: 'siti123', name: 'Siti Rahayu', avatar: 'S', online: true },
+                { id: '4', username: 'agus', password: 'agus123', name: 'Agus Pratama', avatar: 'A', online: true },
+                { id: '5', username: 'dewi', password: 'dewi123', name: 'Dewi Lestari', avatar: 'D', online: true }
+            ];
+            localStorage.setItem('users', JSON.stringify(users));
+        }
+
+        // ===== INIT =====
+        function init() {
+            if (currentUser) {
+                showLoggedInUI();
+                renderUsers();
+            } else {
+                showLoggedOutUI();
+            }
+        }
+
+        // ===== UI CONTROLLER =====
+        function showLoggedInUI() {
+            document.getElementById('userInfo').classList.remove('hidden');
+            document.getElementById('loginSection').classList.add('hidden');
+            document.getElementById('registerSection').classList.add('hidden');
+            document.getElementById('searchSection').classList.remove('hidden');
+            document.getElementById('usersListContainer').classList.remove('hidden');
+            
+            document.getElementById('currentUserName').textContent = currentUser.name;
+            document.getElementById('currentUserAvatar').textContent = currentUser.avatar;
+        }
+
+        function showLoggedOutUI() {
+            document.getElementById('userInfo').classList.add('hidden');
+            document.getElementById('loginSection').classList.remove('hidden');
+            document.getElementById('registerSection').classList.add('hidden');
+            document.getElementById('searchSection').classList.add('hidden');
+            document.getElementById('usersListContainer').classList.add('hidden');
+            document.getElementById('chatHeader').classList.add('hidden');
+            document.getElementById('chatInput').classList.add('hidden');
+            document.getElementById('welcomeState').classList.remove('hidden');
+            
+            selectedUserId = null;
+        }
+
+        function showLogin() {
+            document.getElementById('loginSection').classList.remove('hidden');
+            document.getElementById('registerSection').classList.add('hidden');
+        }
+
+        function showRegister() {
+            document.getElementById('loginSection').classList.add('hidden');
+            document.getElementById('registerSection').classList.remove('hidden');
+        }
+
+        // ===== AUTH =====
+        function register() {
+            const username = document.getElementById('regUsername').value.trim();
+            const password = document.getElementById('regPassword').value;
+            const confirm = document.getElementById('regConfirm').value;
+            const name = document.getElementById('regName').value.trim() || username;
+
+            if (!username || !password || !confirm) {
+                showToast('Semua field harus diisi!', true);
+                return;
+            }
+
+            if (password.length < 3) {
+                showToast('Password minimal 3 karakter!', true);
+                return;
+            }
+
+            if (password !== confirm) {
+                showToast('Password tidak cocok!', true);
+                return;
+            }
+
+            if (users.find(u => u.username === username)) {
+                showToast('Username sudah digunakan!', true);
+                return;
+            }
+
+            const newUser = {
+                id: Date.now() + '',
+                username: username,
+                password: password,
+                name: name,
+                avatar: username[0].toUpperCase(),
+                online: true
+            };
+
+            users.push(newUser);
+            localStorage.setItem('users', JSON.stringify(users));
+
+            showToast('Registrasi berhasil! Silakan login.');
+            
+            document.getElementById('regUsername').value = '';
+            document.getElementById('regPassword').value = '';
+            document.getElementById('regConfirm').value = '';
+            document.getElementById('regName').value = '';
+            
+            showLogin();
+        }
+
+        function login() {
+            const username = document.getElementById('loginUsername').value.trim();
+            const password = document.getElementById('loginPassword').value;
+
+            const user = users.find(u => u.username === username && u.password === password);
+
+            if (user) {
+                currentUser = user;
+                localStorage.setItem('currentUser', JSON.stringify(currentUser));
+                
+                // Update online status
+                users = users.map(u => ({
+                    ...u,
+                    online: u.id === currentUser.id ? true : u.online
+                }));
+                localStorage.setItem('users', JSON.stringify(users));
+                
+                showLoggedInUI();
+                renderUsers();
+                showToast(`Selamat datang, ${user.name}!`);
+                
+                document.getElementById('loginUsername').value = '';
+                document.getElementById('loginPassword').value = '';
+            } else {
+                showToast('Username atau password salah!', true);
+            }
+        }
+
+        function logout() {
+            // Update online status
+            users = users.map(u => ({
+                ...u,
+                online: u.id === currentUser.id ? false : u.online
+            }));
+            localStorage.setItem('users', JSON.stringify(users));
+            
+            currentUser = null;
+            localStorage.removeItem('currentUser');
+            
+            showLoggedOutUI();
+            showToast('Berhasil logout');
+        }
+
+        // ===== USERS =====
+        function renderUsers() {
+            const searchTerm = document.getElementById('searchUser')?.value.toLowerCase() || '';
+            
+            let filteredUsers = users.filter(u => u.id !== currentUser.id);
+            
+            if (searchTerm) {
+                filteredUsers = filteredUsers.filter(u => 
+                    u.username.toLowerCase().includes(searchTerm) || 
+                    u.name.toLowerCase().includes(searchTerm)
+                );
+            }
+            
+            const onlineCount = filteredUsers.filter(u => u.online).length;
+            document.getElementById('onlineCount').textContent = `${onlineCount} online`;
+            
+            if (filteredUsers.length === 0) {
+                document.getElementById('usersList').innerHTML = '<div style="text-align:center;padding:20px;color:#888;">Tidak ada user</div>';
+                return;
+            }
+            
+            document.getElementById('usersList').innerHTML = filteredUsers.map(user => {
+                const isSelected = selectedUserId === user.id;
+                
+                const lastMsg = messages
+                    .filter(m => 
+                        (m.senderId === currentUser.id && m.receiverId === user.id) ||
+                        (m.senderId === user.id && m.receiverId === currentUser.id)
+                    )
+                    .sort((a, b) => new Date(b.timestamp) - new Date(a.timestamp))[0];
+                
+                const unread = messages.filter(m => 
+                    m.senderId === user.id && 
+                    m.receiverId === currentUser.id && 
+                    !m.read
+                ).length;
+                
+                return `
+                    <div class="user-item ${isSelected ? 'selected' : ''}" onclick="selectUser('${user.id}')">
+                        <div class="user-avatar-large">${user.avatar}</div>
+                        <div class="user-info-chat">
+                            <div class="user-name-chat">${user.name}</div>
+                            <div class="user-status">
+                                <span class="status-dot ${user.online ? '' : 'offline'}"></span>
+                                ${user.online ? 'Online' : 'Offline'}
+                                ${lastMsg ? `<span style="margin-left:10px;">${lastMsg.text.substring(0,20)}...</span>` : ''}
+                            </div>
+                        </div>
+                        ${unread > 0 ? `<div class="unread-badge">${unread}</div>` : ''}
+                    </div>
+                `;
+            }).join('');
+        }
+
+        function searchUsers() {
+            renderUsers();
+        }
+
+        function selectUser(userId) {
+            selectedUserId = userId;
+            const user = users.find(u => u.id === userId);
+            
+            if (user) {
+                document.getElementById('chatHeader').classList.remove('hidden');
+                document.getElementById('chatInput').classList.remove('hidden');
+                document.getElementById('welcomeState').classList.add('hidden');
+                
+                document.getElementById('chatAvatar').textContent = user.avatar;
+                document.getElementById('chatName').textContent = user.name;
+                document.getElementById('chatStatusText').textContent = user.online ? 'Online' : 'Offline';
+                
+                const dot = document.getElementById('chatStatusDot');
+                if (user.online) {
+                    dot.classList.remove('offline');
+                } else {
+                    dot.classList.add('offline');
+                }
+                
+                // Mark as read
+                messages = messages.map(m => {
+                    if (m.senderId === userId && m.receiverId === currentUser.id) {
+                        return { ...m, read: true };
+                    }
+                    return m;
+                });
+                localStorage.setItem('messages', JSON.stringify(messages));
+                
+                renderMessages();
+                renderUsers();
+            }
+        }
+
+        // ===== MESSAGES =====
+        function renderMessages() {
+            if (!selectedUserId) return;
+            
+            const chatMessages = messages
+                .filter(m => 
+                    (m.senderId === currentUser.id && m.receiverId === selectedUserId) ||
+                    (m.senderId === selectedUserId && m.receiverId === currentUser.id)
+                )
+                .sort((a, b) => new Date(a.timestamp) - new Date(b.timestamp));
+            
+            if (chatMessages.length === 0) {
+                document.getElementById('messagesList').innerHTML = '<div style="text-align:center;padding:20px;color:#888;">Belum ada pesan</div>';
+                return;
+            }
+            
+            document.getElementById('messagesList').innerHTML = chatMessages.map(msg => {
+                const isSent = msg.senderId === currentUser.id;
+                const sender = isSent ? currentUser : users.find(u => u.id === msg.senderId);
+                
+                return `
+                    <div class="message ${isSent ? 'sent' : ''}">
+                        <div class="message-avatar">${sender.avatar}</div>
+                        <div class="message-content">
+                            <div class="message-header">
+                                <span class="message-name">${sender.name}</span>
+                                <span class="message-time">${new Date(msg.timestamp).toLocaleTimeString()}</span>
+                            </div>
+                            <div class="message-text">${msg.text}</div>
+                        </div>
+                    </div>
+                `;
+            }).join('');
+            
+            document.getElementById('messagesContainer').scrollTop = document.getElementById('messagesContainer').scrollHeight;
+        }
+
+        function sendMessage() {
+            const input = document.getElementById('messageInput');
+            const text = input.value.trim();
+            
+            if (!text || !selectedUserId) return;
+            
+            const newMessage = {
+                id: Date.now() + '',
+                senderId: currentUser.id,
+                receiverId: selectedUserId,
+                text: text,
+                timestamp: new Date().toISOString(),
+                read: false
+            };
+            
+            messages.push(newMessage);
+            localStorage.setItem('messages', JSON.stringify(messages));
+            
+            input.value = '';
+            renderMessages();
+            renderUsers();
+            
+            // Simulasi reply
+            setTimeout(() => {
+                const receiver = users.find(u => u.id === selectedUserId);
+                if (receiver && Math.random() > 0.5) {
+                    const replies = ['Hai', 'Ok', 'Iya', 'Wkwk', '😂', 'Siap', 'Makasih'];
+                    const replyMsg = {
+                        id: Date.now() + '',
+                        senderId: selectedUserId,
+                        receiverId: currentUser.id,
+                        text: replies[Math.floor(Math.random() * replies.length)],
+                        timestamp: new Date().toISOString(),
+                        read: false
+                    };
+                    messages.push(replyMsg);
+                    localStorage.setItem('messages', JSON.stringify(messages));
+                    if (selectedUserId === receiver.id) {
+                        renderMessages();
+                    }
+                    renderUsers();
+                }
+            }, 2000);
+        }
+
+        // ===== EMOJI =====
+        function toggleEmojiPicker() {
+            document.getElementById('emojiPicker').classList.toggle('show');
+        }
+
+        function addEmoji(emoji) {
+            document.getElementById('messageInput').value += emoji;
+            document.getElementById('messageInput').focus();
+            toggleEmojiPicker();
+        }
+
+        // ===== TOAST =====
+        function showToast(msg, isError = false) {
+            const toast = document.getElementById('toast');
+            document.getElementById('toastMessage').innerText = msg;
+            
+            if (isError) {
+                toast.classList.add('error');
+                toast.querySelector('i').className = 'fas fa-exclamation-circle';
+            } else {
+                toast.classList.remove('error');
+                toast.querySelector('i').className = 'fas fa-check-circle';
+            }
+            
+            toast.classList.add('show');
+            setTimeout(() => toast.classList.remove('show'), 3000);
+        }
+
+        // Close emoji picker
+        document.addEventListener('click', (e) => {
+            if (!e.target.closest('.emoji-btn') && !e.target.closest('.emoji-picker')) {
+                document.getElementById('emojiPicker').classList.remove('show');
+            }
+        });
+
+        // Auto refresh
+        setInterval(() => {
+            if (currentUser) {
+                users = JSON.parse(localStorage.getItem('users')) || [];
+                messages = JSON.parse(localStorage.getItem('messages')) || [];
+                
+                // Random online status
+                users = users.map(u => ({
+                    ...u,
+                    online: Math.random() > 0.3
+                }));
+                localStorage.setItem('users', JSON.stringify(users));
+                
+                renderUsers();
+                if (selectedUserId) renderMessages();
+            }
+        }, 5000);
+
+        // Start
+        init();
+    </script>
+</body>
+</html>
